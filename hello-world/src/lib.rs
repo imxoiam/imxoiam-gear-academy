@@ -32,7 +32,8 @@ extern "C" fn handle() {
        }
        TmgAction::Age => {
            debug!("Message: Age");
-           msg::reply(TmgEvent::Age(my_tamagotchi.date_of_birth), 0).expect("Error in sending reply");
+           let age = exec::block_timestamp() - my_tamagotchi.date_of_birth;
+           msg::reply(TmgEvent::Age(age), 0).expect("Error in sending reply");
        }
    }
 }
