@@ -1,1 +1,1 @@
-target/wasm32-unknown-unknown/release/tamagotchi
+target/wasm32-unknown-unknown/debug/tamagotchi
