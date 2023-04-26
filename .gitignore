@@ -4,3 +4,5 @@ escrow/escrow/target/
 escrow/escrow/state/target
 escrow/tamagotchi_v2/target
 escrow/tamagotchi_v2/state/target
+token/tamagotchi_v3/target
+token/tamagotchi_v3/state/target
