@@ -1,2 +1,6 @@
 .vscode
 hello-world/target/
+escrow/escrow/target/
+escrow/escrow/state/target
+escrow/tamagotchi_v2/target
+escrow/tamagotchi_v2/state/target
