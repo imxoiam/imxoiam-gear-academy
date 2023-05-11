@@ -71,6 +71,6 @@ pub struct Tamagotchi {
    pub entertained_block: u64,
    pub rested: u64,
    pub rested_block: u64,
-   pub allowed_account: Option<ActorId>,
-   pub ft_contract_id: Option<ActorId>
+   pub allowed_account: ActorId,
+   pub ft_contract_id: ActorId
 }

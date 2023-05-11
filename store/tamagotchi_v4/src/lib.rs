@@ -50,34 +50,34 @@ async fn main() {
          msg::reply(TmgEvent::Transfer(my_tamagotchi.owner), 0).expect("Error in sending reply");
        }
        TmgAction::Approve(allowed_account_id) => {
-         my_tamagotchi.allowed_account = Some(allowed_account_id);
+         my_tamagotchi.allowed_account = allowed_account_id;
          msg::reply(TmgEvent::Approve(allowed_account_id), 0).expect("Error in sending reply");
        }
        TmgAction::RevokeApproval => {
-         my_tamagotchi.allowed_account = None;
+         my_tamagotchi.allowed_account = 0.into();
          msg::reply(TmgEvent::RevokeApproval, 0).expect("Error in sending reply");
        }
        TmgAction::SetFTokenContract(ft_token_id) => {
-         my_tamagotchi.ft_contract_id = Some(ft_token_id);
+         my_tamagotchi.ft_contract_id = ft_token_id;
          msg::reply(TmgEvent::SetFTokenContract, 0).expect("Error in sending reply");
        }
-       TmgAction::ApproveTokens(account, amount) => {
+       TmgAction::ApproveTokens{account: account_id, amount: amount_val} => {
          msg::send_for_reply_as::<_, FTokenEvent>(
             my_tamagotchi.ft_contract_id,
             FTokenAction::Message {
                 transaction_id: 1,
                 payload: LogicAction::Approve {
-                    approved_account: account,
-                    amount,
+                    approved_account: account_id,
+                    amount: amount_val,
                 },
             },
             0,
         )
         .expect("Error in sending a message `FTokenAction::Message`")
         .await; 
-         msg::reply(TmgEvent::ApproveTokens(account, amount), 0).expect("Error in sending reply");
+         msg::reply(TmgEvent::ApproveTokens{account: account_id, amount: amount_val}, 0).expect("Error in sending reply");
        }
-       TmgAction::BuyAttribute(store_id, attribute_id) => {
+       TmgAction::BuyAttribute{store_id, attribute_id} => {
          msg::send_for_reply_as::<_, FTokenEvent>(
             store_id,
             StoreAction::BuyAttribute {
@@ -110,7 +110,8 @@ extern "C" fn init() {
       entertained_block: ent_b,
       rested: FILL_PER_SLEEP,
       rested_block: rest_b,
-      allowed_account: None,
+      allowed_account: 0.into(),
+      ft_contract_id: 0.into()
    };
    unsafe { MY_TAMAGOTCHI = Some(my_tamagotchi) };
 }
